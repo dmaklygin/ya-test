@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>test-1</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="answer-1.css" type="text/css">
+    <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script type="text/javascript" src="answer-1.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        !function () {
+            if (undefined === window.jQuery) {
+                throw new ReferenceError("Подключите jQuery пожалуйста.");
+            }
+
+            jQuery(function () {
+
+                var testWrapperId,
+                    testWrapper,
+                    bmw, audi, toyota, vaz,
+                    yandex;
+
+                testWrapperId   = "test-1-wrapper";
+                testWrapper     = jQuery("#" + testWrapperId);
+
+
+                // @TODO: если конструктор вызывается без указания текущего года, то подставлять текущий
+                // @TODO: реализовать методы вывода информации о машине:
+                bmw     = new Car("BMW", "X5", 2010);
+                audi    = new Car("Audi", "Q5", 2012);
+                toyota  = new Car("Toyota", "Camry");
+                vaz     = new Car("Vaz", "9", 1987);
+
+                console.log('Car: ' + bmw); // Car: BMW X5 2010
+                console.log(bmw.getInfo()); // BMW X5 2010
+                console.log(bmw.getDetailedInfo()); // Производитель: BMW. Модель: X5. Год: 2010
+
+                yandex = new CarDealer('Яндекс.Авто');
+
+
+                // @TODO: реализовать метод добавления машин в автосалон. Предусмотреть возможность добавления одной машины, нескольких машин.
+                yandex
+                    .add(toyota)
+                    .add(bmw, audi, vaz);
+
+                // @TODO: реализовать метод установки цены на машину
+                /**
+                 * Установить цену на машину
+                 * @param {string} car идентификатор машины
+                 * @param {string} price стоимость
+                 */
+                // идентификатор машины составляется следующим образом "производитель модель год"
+                // стоимость машины может быть задана в двух валютах: йена и евро.
+                yandex
+                    .setPrice('BMW X5 2010', '€2000')
+                    .setPrice('Audi Q5 2012', '€3000')
+                    .setPrice('Toyota Camry 2012', '¥3000')
+                    .setPrice('Vaz 9 1987', 'Р212000');
+
+                // @TODO: реализовать вывод списка автомобилей в продаже, с фильтрацией по стране производителю, используя метод getCountry:
+                function getCountry() {
+                    switch (this.manufacturer.toLowerCase()) {
+                        case 'bmw':
+                        case 'audi':
+                            return 'Germany';
+
+                        case 'toyota':
+                            return 'Japan';
+                    }
+                }
+
+                yandex.list(); //BMW X5 2010, Audi Q5 2012, Toyota Camry 2012
+                yandex.listByCountry('Germany'); //BMW X5 2010, Audi Q5 2012
+                yandex.listByCurrency("¥"); // Toyota Camry 2012
+                yandex.listByCurrency("Р"); // Vaz 9 1987
+            });
+        }();
+
+
+
+    </script>
+    <div id="test-1-wrapper"></div>
+</body>
+</html>
